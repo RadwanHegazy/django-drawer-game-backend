@@ -8,6 +8,7 @@ class ProfileView (APIView):
     def get(self,request) : 
         user = request.user
         data = {
+            'id' : user.id,
             'full_name' : user.full_name,
             'email' : user.email,
             'picture' : user.picture.url,

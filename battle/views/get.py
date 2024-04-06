@@ -15,9 +15,13 @@ class GetBattle(APIView) :
         except Exception :
             return Response({
                 'message' : 'battle not exist'
-            },status=status.HTTP_204_NO_CONTENT)
+            },status=status.HTTP_404_NOT_FOUND)
         
         if user != battle.owner and user not in battle.guests.all(): 
             battle.guests.add(user)
-
-        return Response(status=status.HTTP_200_OK)
+        data = {
+            'id' : str(battle.id),
+            'owner' : battle.owner.id
+            # 'guests' : [i.id for i in battle.guests.all()],
+        }
+        return Response(data,status=status.HTTP_200_OK)
